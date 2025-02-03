@@ -1,6 +1,21 @@
 import streamlit as st
 import pandas as pd
 import pickle
+import google.generativeai as genai
+import os as os
+
+
+
+genai.configure(api_key="API_KEY_GOOGLE")
+
+
+def get_gemini_response(prompt):
+    try:
+        model = genai.GenerativeModel("gemini-2.0-flash-exp")
+        response = model.generate_content(prompt)
+        return response.text
+    except Exception as e:
+        return f"Error: {str(e)}"
 
 # Load the saved model, scaler, one-hot encoder, and training columns from the 'model' folder
 with open('model/random_forest_model.pkl', 'rb') as f:
@@ -275,5 +290,15 @@ if st.button("Predict Dropout"):
     st.subheader('Prediction')
     status_map = {0: 'Dropout', 1: 'Not Dropout'}
     st.write(status_map[prediction[0]])
+    
+    user_input = f'''Explain the factors that contributed to the prediction of dropout for the student with the following data: {status_map[prediction[0]]} in 10 lines'''
+    
+    if user_input:
+        with st.spinner("Thinking..."):
+            response = get_gemini_response(user_input)
+        st.write("### AI Response:")
+        st.write(response)
+    else:
+        st.warning("Please enter a question to proceed.")
 
 
