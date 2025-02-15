@@ -4,8 +4,6 @@ import pickle
 import google.generativeai as genai
 import os as os
 
-
-
 genai.configure(api_key="API_KEY_GOOGLE")
 
 

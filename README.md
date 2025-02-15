@@ -60,7 +60,6 @@ streamlit run app.py
 ```
 
 ## Conclusion
-
 The project successfully developed a machine learning model to predict student dropout risks with reasonable accuracy. The model, when integrated with the business dashboard in Looker Studio, provides valuable insights that can help the institution reduce dropout rates and improve overall student retention.
 
 ### Recommended Action Items
