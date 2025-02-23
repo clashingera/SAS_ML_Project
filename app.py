@@ -3,8 +3,7 @@ import pandas as pd
 import pickle
 import google.generativeai as genai
 import os as os
-
-genai.configure(api_key="API_KEY_GOOGLE")
+genai.configure(api_key="AIzaSyDyNa6r6LongmI-wyTYKiLcfeukzShd18w")
 
 
 def get_gemini_response(prompt):
