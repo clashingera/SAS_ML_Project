@@ -6,6 +6,7 @@ import os as os
 genai.configure(api_key="AIzaSyDyNa6r6LongmI-wyTYKiLcfeukzShd18w")
 
 
+
 def get_gemini_response(prompt):
     try:
         model = genai.GenerativeModel("gemini-2.0-flash-exp")
