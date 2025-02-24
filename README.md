@@ -1,73 +1,107 @@
-# Final Project: Student Attration Syatem
+---
 
-## Introdution
+# Student Attrition System
 
-The project aims to assist an edutech company in predicting student dropout risks. High dropout rates are a critical issue for educational institutions, affecting both their reputation and financial stability. By identifying at-risk students early, the company can intervene proactively to improve student retention and success.
+[![Python Version](https://img.shields.io/badge/Python-3.9%2B-blue.svg)](https://www.python.org/)
+[![Streamlit](https://img.shields.io/badge/Streamlit-1.x-green.svg)](https://streamlit.io/)
+[![Scikit-Learn](https://img.shields.io/badge/scikit--learn-1.x-orange.svg)](https://scikit-learn.org/)
 
-### Problems
+> **Animated Pointer:**  
+> ![Animated Pointer](https://media.giphy.com/media/xUPGcguWZHRC2HyBRS/giphy.gif)
 
-The key business problems addressed in this project include:
+---
 
-- High student dropout rates impacting the institution's performance.
-- Lack of early detection mechanisms for identifying students at risk of dropping out.
-- Inadequate insights into factors contributing to student attrition.
+## Introduction
 
-### Project Scope
+Student dropout rates are a significant challenge for educational institutions, affecting both reputation and financial stability. This project helps an edutech company predict student dropout risks, enabling early intervention to improve retention and student success.
 
-The project focuses on the following areas:
+---
 
-- Data preprocessing and feature engineering to clean and prepare the dataset.
-- Developing and training a machine learning model to predict student dropout.
-- Deploying the model using Streamlit for easy access and usability.
-- Creating a business dashboard with Looker Studio to visualize insights and track student performance.
+## Problems Addressed
 
-### Preparation
+- **High Dropout Rates:** Impacting institutional performance and reputation.
+- **Late Detection:** The absence of early warning mechanisms to identify at-risk students.
+- **Limited Insights:** Inadequate understanding of the factors that contribute to student attrition.
 
-Data source: [Student Performance Dataset](https://github.com/dicodingacademy/dicoding_dataset/blob/main/students_performance/README.md)
+---
 
-Setup environment:
+## Project Scope
 
-```bash
-# Install necessary packages
-pip install -r requirements.txt
+- **Data Preprocessing & Feature Engineering:** Cleaning and preparing the dataset.
+- **Machine Learning Modeling:** Training predictive models to assess dropout risk.
+- **Deployment with Streamlit:** Creating an interactive app for predictions.
+- **Dashboard Visualization:** Building a business dashboard with Looker Studio to display insights and monitor student performance.
 
-# Run the Streamlit app
-streamlit run app.py
-```
+---
+
+## Preparation
+
+### Data Source
+- [Student Performance Dataset](https://github.com/dicodingacademy/dicoding_dataset/blob/main/students_performance/README.md)
+
+### Environment Setup
+
+1. **Clone the Repository:**
+   ```bash
+   git clone <repository-url>
+   cd SAS_ML_Project
+   ```
+
+2. **Install Required Packages:**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. **Run the Streamlit App:**
+   ```bash
+   streamlit run app.py
+   ```
+
+---
 
 ## Dashboard
 
-The dashboard, built using Looker Studio, visualizes key insights about student performance and dropout risks. It provides stakeholders with actionable information to identify at-risk students and understand the factors contributing to dropout. You can view the business dashboard here: [Looker Studio Dashboard](https://lookerstudio.google.com/reporting/5bde8ef5-73d2-4edb-8dad-1425eb49d6b2).
+The business dashboard, built using Looker Studio, provides visual insights into student performance and dropout risks. It enables stakeholders to quickly identify at-risk students and understand the underlying factors.
+
+- **View the Dashboard:** [Looker Studio Dashboard](https://lookerstudio.google.com/reporting/5bde8ef5-73d2-4edb-8dad-1425eb49d6b2)
+
+---
 
 ## Running the Machine Learning System
 
-To run the machine learning prototype, follow these steps:
+To run the machine learning prototype:
 
-1. Clone the repository.
-2. Install the required dependencies using `pip install -r requirements.txt`.
-3. Run the Streamlit app using `streamlit run app.py`.
-4. The app will allow you to input student data and predict the likelihood of dropout.
+1. **Clone the repository.**
+2. **Install dependencies** using `pip install -r requirements.txt`.
+3. **Launch the Streamlit app**:
+   ```bash
+   streamlit run app.py
+   ```
+4. **Input student data** within the app to receive dropout risk predictions.
 
-```bash
-# Clone the repository
-git clone <repository-url>
-
-# Install necessary packages
-pip install -r requirements.txt
-
-# Run the Streamlit app
-streamlit run app.py
-```
+---
 
 ## Conclusion
-The project successfully developed a machine learning model to predict student dropout risks with reasonable accuracy. The model, when integrated with the business dashboard in Looker Studio, provides valuable insights that can help the institution reduce dropout rates and improve overall student retention.
 
-### Recommended Action Items
+The Student Attrition System project successfully develops a machine learning model that predicts student dropout risks with reasonable accuracy. By integrating this model with a Looker Studio dashboard, institutions can gain actionable insights to reduce dropout rates and enhance student retention.
 
-Here are a few recommended actions for the company to address the dropout issue:
+---
 
-- **Enhance Support for Academic Performance**: Focus on programs that help students complete their curricular units, especially in the first semester, through tutoring, academic counseling, and additional learning resources.
-- **Ensure Timely Payment of Tuition Fees**: Introduce financial aid or flexible payment options to help students manage their tuition fees and reduce the risk of dropout due to financial difficulties.
-- **Address Pre-existing Academic Gaps**: Provide training or development programs for students with lower previous qualification grades to ensure they are prepared for the higher academic demands of college.
-- **Increase Monitoring for Debtor Students**: Enhance monitoring and support for students with financial debt to reduce stress and ensure they remain focused on their studies.
-- **Expand Scholarship Programs**: Consider expanding scholarship programs to support more students, particularly those identified as being at higher risk of dropout.
+## Recommended Action Items
+
+- **Enhance Academic Support:**  
+  Implement tutoring, counseling, and additional resources for students, especially during the early semesters.
+
+- **Improve Financial Flexibility:**  
+  Introduce financial aid or flexible payment options to ease tuition fee burdens.
+
+- **Address Academic Gaps:**  
+  Offer preparatory courses or additional training for students with lower prior qualifications.
+
+- **Monitor Financial Stress:**  
+  Increase support and monitoring for students facing financial difficulties.
+
+- **Expand Scholarship Programs:**  
+  Broaden scholarship offerings to support high-risk students.
+
+---
