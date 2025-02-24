@@ -1,0 +1,6 @@
+student_name,degree,year,cgpa_sem1,cgpa_sem2,cgpa_sem3,cgpa_sem4,cgpa_sem5,cgpa_sem6,cgpa_sem7,attendance
+Rahul Deshmukh,CSE,FE,8.21,8.50,8.67,8.33,8.50,8.75,9.00,92
+Priya Patil,IT,SE,7.95,8.00,8.15,8.20,8.00,8.05,8.10,88
+Amit Kulkarni,ME,TE,8.50,8.55,8.70,8.80,8.85,8.90,9.00,85
+Sneha Jadhav,ENTC,BE,9.00,9.05,9.10,9.15,9.20,9.25,9.30,95
+Vikram Shinde,CSE,FE,7.50,7.60,7.65,7.70,7.75,7.80,7.85,80
