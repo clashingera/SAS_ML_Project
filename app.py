@@ -1,11 +1,13 @@
+# venv\Scripts\activate
 import streamlit as st
 import pandas as pd
 import pickle
 import google.generativeai as genai
 import os
-
+from dotenv import load_dotenv
 # Configure the Generative AI API
-genai.configure(api_key="AIzaSyDyNa6r6LongmI-wyTYKiLcfeukzShd18w")
+load_dotenv()
+genai.configure(api_key=os.getenv("API_KEY"))
 
 def get_gemini_response(prompt):
     try:
@@ -32,6 +34,9 @@ with open('model/training_columns.pkl', 'rb') as f:
 st.markdown("<h1 style='text-align: left;'>🎓 Student Attrition System</h1>", unsafe_allow_html=True)
 st.markdown("<h3 style='text-align: left;'>Predict student dropout using demographic and academic data</h3>", unsafe_allow_html=True)
 
+
+# Initialize data variable
+data = None
 # File uploader for CSV data
 uploaded_file = st.file_uploader("Upload CSV File with Student Data", type=["csv"])
 
@@ -89,24 +94,29 @@ if uploaded_file is not None:
         results = data[['student_name']].copy()
         results['Dropout'] = [status_map[p] for p in predictions]
         
-        # Generate explanation (reason) for each prediction using Gemini
+        # Initialize reasons list here
         reasons = []
+        
+        # Generate explanation for each prediction
         for i, row in data.iterrows():
             prompt = (
-                f"Explain the factors that contributed to the dropout prediction for student '{row['student_name']}' "
-                f"with the following data: {row.to_dict()} in 10 lines."
+                f"Explain in a humanized way the factors that contributed to the dropout prediction for student '{row['student_name']}' "
+                f"with the following data: {row.to_dict()}. "
+                f"Make it conversational and provide suggestions if they are predicted to drop out."
             )
             with st.spinner(f"Generating explanation for {row['student_name']}..."):
                 explanation = get_gemini_response(prompt)
             reasons.append(explanation)
-        
-        results['Reason'] = reasons
 
+        results['Reason'] = reasons
         st.write("### Prediction Results", results)
 
 else:
     # If no file is uploaded, continue with the interactive input approach
     def user_input_features():
+        st.header("Student Information")
+        student_name = st.text_input("Student Name", "") 
+           
         st.header("Student Demographics")
         col1, col2 = st.columns(2)
         with col1:
@@ -226,8 +236,8 @@ else:
                     '43 - Higher education - master (2nd cycle)'
                 ]
             )
-            previous_qualification_grade = st.slider('Previous Qualification Grade', 0.0, 200.0, 150.0)
-            admission_grade = st.slider('Admission Grade', 0.0, 200.0, 150.0)
+            previous_qualification_grade = st.slider('Previous Qualification Grade', 0.0, 100.0, 50.0)
+            admission_grade = st.slider('Admission Grade', 0.0, 100.0, 50.0)
         with col6:
             application_mode = st.selectbox(
                 'Application Mode',
@@ -260,11 +270,11 @@ else:
         col7, col8 = st.columns(2)
         with col7:
             daytime_evening_attendance = st.selectbox('Daytime/Evening Attendance', ['1 – Daytime', '0 - Evening'])
-            curricular_units_1st_sem_credited = st.slider('Curricular Units 1st Sem (Credited)', 0, 60, 30)
-            curricular_units_1st_sem_enrolled = st.slider('Curricular Units 1st Sem (Enrolled)', 0, 60, 30)
+            curricular_units_1st_sem_credited = st.slider('Curricular Units 1st Sem (Credited)', 0, 100, 30)
+            curricular_units_1st_sem_enrolled = st.slider('Curricular Units 1st Sem (Enrolled)', 0, 100, 30)
         with col8:
-            curricular_units_1st_sem_evaluations = st.slider('Curricular Units 1st Sem (Evaluations)', 0, 60, 30)
-            curricular_units_1st_sem_approved = st.slider('Curricular Units 1st Sem (Approved)', 0, 60, 30)
+            curricular_units_1st_sem_evaluations = st.slider('Curricular Units 1st Sem (Evaluations)', 0, 100, 30)
+            curricular_units_1st_sem_approved = st.slider('Curricular Units 1st Sem (Approved)', 0, 100, 30)
 
         st.header("Additional Information")
         col9, col10 = st.columns(2)
@@ -303,19 +313,26 @@ else:
             'Curricular_units_1st_sem_approved': curricular_units_1st_sem_approved
         }
         features = pd.DataFrame(data, index=[0])
-        return features
+        return features, student_name
 
-    input_df = user_input_features()
+    input_df, student_name = user_input_features()
+
+    # In the prediction section
     if st.button("Predict Dropout"):
         categorical_cols = [
             'Application_mode', 'Course', 'Marital_status', 'Nacionality',
             'Mothers_qualification', 'Fathers_qualification',
             'Mothers_occupation', 'Fathers_occupation'
         ]
+        # Encode categorical feature
         input_encoded = encoder.transform(input_df[categorical_cols])
         input_encoded_df = pd.DataFrame(input_encoded, columns=encoder.get_feature_names_out(categorical_cols))
+        # Drop categorical columns but keep 'Student_Name'
         input_df = input_df.drop(columns=categorical_cols)
+        # Concatenate the encoded DataFrame with the remaining features
         input_df = pd.concat([input_df.reset_index(drop=True), input_encoded_df.reset_index(drop=True)], axis=1)
+        
+        
         numerical_cols = [
             'Previous_qualification_grade', 'Admission_grade',
             'Curricular_units_1st_sem_credited', 'Curricular_units_1st_sem_enrolled',
@@ -325,11 +342,29 @@ else:
         input_df[numerical_cols] = scaler.transform(input_df[numerical_cols])
         input_df = input_df[training_columns]
         prediction = model.predict(input_df)
-        st.subheader('Prediction')
-        st.write(status_map[prediction[0]])
         
-        prompt = f"Explain the factors that contributed to the dropout prediction for the student with the following data: {status_map[prediction[0]]} in 10 lines"
+
+        st.subheader('Prediction')
+        status_map = {0: 'Dropout', 1: 'Not Dropout'}
+        prediction_status = status_map[prediction[0]]
+        st.write(prediction_status)
+
+        # Modify the prompt for a more humanized response
+        if prediction[0] == 0:  # Dropout
+            prompt = (
+                f"As per the prediction, we can see that {student_name} is likely to drop out. "
+                f"However, if we take the following measures, {student_name} can sustain their studies: "
+            )
+        else:  # Not Dropout
+            prompt = (
+                f"Great news! It looks like {student_name} is not likely to drop out because they have demonstrated "
+                f"the following positive factors: "
+            )
+
         with st.spinner("Thinking..."):
             response = get_gemini_response(prompt)
         st.write("### AI Response:")
         st.write(response)
+
+
+
