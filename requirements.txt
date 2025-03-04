@@ -43,13 +43,14 @@ pydeck==0.9.1
 Pygments==2.19.1
 pyparsing==3.2.1
 python-dateutil==2.9.0.post0
+python-dotenv==1.0.1
 pytz==2025.1
 referencing==0.36.2
 requests==2.32.3
 rich==13.9.4
 rpds-py==0.23.1
 rsa==4.9
-scikit-learn==1.6.1
+scikit-learn==1.5.1
 scipy==1.15.2
 six==1.17.0
 smmap==5.0.2
