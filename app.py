@@ -5,8 +5,6 @@ import pickle
 import google.generativeai as genai
 import os
 from dotenv import load_dotenv
-import visualizations as viz  # Import the visualizations module
-
 # Configure the Generative AI API
 load_dotenv()
 genai.configure(api_key=os.getenv("API_KEY"))
@@ -113,52 +111,6 @@ if uploaded_file is not None:
         results['Reason'] = reasons
         st.write("### Prediction Results", results)
 
-        # Analysis and visualizations section
-        st.write("### Summary Metrics")
-        total_records = len(data)
-        dropout_count = results[results['Dropout'] == 'Dropout'].shape[0]
-        non_dropout_count = total_records - dropout_count
-        dropout_rate = (dropout_count / total_records) * 100 if total_records > 0 else 0
-        
-        summary_data = {
-            "Total Records": [total_records],
-            "Total Dropouts": [dropout_count],
-            "Total Non-Dropouts": [non_dropout_count],
-            "Dropout Rate (%)": [dropout_rate]
-        }
-        summary_df = pd.DataFrame(summary_data)
-        st.dataframe(summary_df)
-        
-        # Interactive visualizations
-        st.write("### Visualizations")
-        
-        # Use the results DataFrame for visualizations
-        # Bar Chart
-        st.write("#### Bar Chart")
-        bar_col = st.selectbox("Select column for Bar Chart", results.columns)
-        st.pyplot(viz.plot_bar_chart(results, bar_col, 'Dropout'))
-        
-        # Line Chart
-        st.write("#### Line Chart")
-        line_x_col = st.selectbox("Select X column for Line Chart", results.columns)
-        line_y_col = st.selectbox("Select Y column for Line Chart", results.columns)
-        st.pyplot(viz.plot_line_chart(results, line_x_col, line_y_col))
-        
-        # Pie Chart
-        st.write("#### Pie Chart")
-        pie_col = st.selectbox("Select column for Pie Chart", results.columns)
-        st.pyplot(viz.plot_pie_chart(results, pie_col))
-        
-        # Heatmap
-        st.write("#### Correlation Heatmap")
-        st.pyplot(viz.plot_heatmap(results))
-        
-        # Scatter Plot
-        st.write("#### Scatter Plot")
-        scatter_x_col = st.selectbox("Select X column for Scatter Plot", results.columns)
-        scatter_y_col = st.selectbox("Select Y column for Scatter Plot", results.columns)
-        st.pyplot(viz.plot_scatter(results, scatter_x_col, scatter_y_col))
-
 else:
     # If no file is uploaded, continue with the interactive input approach
     def user_input_features():
@@ -187,7 +139,7 @@ else:
             gender = st.selectbox('Gender', ['1 – Male', '0 – Female'])
         with col2:
             age_at_enrollment = st.slider('Age at Enrollment', 17, 70, 18)
-            displaced = st.selectbox('Relocated Student', ['1 – Yes', '0 – No'])
+            displaced = st.selectbox('Displaced', ['1 – Yes', '0 – No'])
             international = st.selectbox('International', ['1 – Yes', '0 – No'])
 
         st.header("Family Background")
@@ -285,7 +237,7 @@ else:
                 ]
             )
             previous_qualification_grade = st.slider('Previous Qualification Grade', 0.0, 100.0, 50.0)
-            admission_grade = st.slider('Entrance Score', 0.0, 100.0, 50.0)
+            admission_grade = st.slider('Admission Grade', 0.0, 100.0, 50.0)
         with col6:
             application_mode = st.selectbox(
                 'Application Mode',
@@ -305,7 +257,7 @@ else:
             course = st.selectbox(
                 'Course',
                 [
-                    '33 - Computer Engineering', '171 - Animation and Multimedia Design',
+                    '33 - Biofuel Production Technologies', '171 - Animation and Multimedia Design',
                     '8014 - Social Service (evening attendance)', '9003 - Agronomy',
                     '9070 - Communication Design', '9085 - Veterinary Nursing', '9119 - Informatics Engineering',
                     '9130 - Equinculture', '9147 - Management', '9238 - Social Service', '9254 - Tourism',

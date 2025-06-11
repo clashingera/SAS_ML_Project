@@ -32,27 +32,7 @@ def plot_pie_chart(data, column):
 
 def plot_heatmap(data):
     plt.figure(figsize=(10, 8))
-    # Select only numeric columns for correlation
-    numeric_data = data.select_dtypes(include=['float64', 'int64'])
-    
-    # Check if there are any numeric columns
-    if numeric_data.empty:
-        plt.text(0.5, 0.5, 'No numeric data available for correlation.', 
-                 horizontalalignment='center', verticalalignment='center', 
-                 fontsize=15, color='red')
-        plt.axis('off')  # Hide axes
-        return plt
-
-    correlation = numeric_data.corr()
-    
-    # Check if the correlation DataFrame is empty
-    if correlation.empty:
-        plt.text(0.5, 0.5, 'Correlation matrix is empty.', 
-                 horizontalalignment='center', verticalalignment='center', 
-                 fontsize=15, color='red')
-        plt.axis('off')  # Hide axes
-        return plt
-
+    correlation = data.corr()
     sns.heatmap(correlation, annot=True, fmt=".2f", cmap='coolwarm')
     plt.title('Correlation Heatmap')
     plt.tight_layout()
